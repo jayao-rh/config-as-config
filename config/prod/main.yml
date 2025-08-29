@@ -1,0 +1,9 @@
+---
+aap_hostname: ""
+aap_username: ""
+aap_password: ""
+aap_validate_certs: false
+env: prod
+scm_branch: "" # when you want it to be default branch just set to ""
+
+...

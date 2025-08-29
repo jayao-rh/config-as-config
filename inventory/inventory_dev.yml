@@ -1,0 +1,12 @@
+---
+all:
+  children:
+    dev:
+      hosts:
+        localhost
+      vars:
+        connection: local
+
+  vars:
+    env: dev
+...

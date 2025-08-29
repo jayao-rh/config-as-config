@@ -1,0 +1,59 @@
+---
+controller_inventories_demo2:
+  - name: config_as_code_demo2
+    description: inventory for configuring as code
+    organization: demo2
+aap_organizations_demo2:
+  - name: demo2
+    galaxy_credentials:
+      - hub_published
+      - hub_certified
+      - hub_validated
+      - hub_community
+  # default_environment: supported
+controller_credentials_demo2:
+  - name: aap_demo2
+    credential_type: Red Hat Ansible Automation Platform
+    organization: demo2
+    description: aap org admin account for demo2
+    inputs:
+      host: "{{ aap_hostname }}"
+      username: demo2_org_admin_service_account
+      password: "{{ aap_password }}"
+      verify_ssl: false
+aap_user_accounts_demo2:
+  - username: demo2_org_admin_service_account
+    is_superuser: false
+    password: "{{ aap_password }}"
+gateway_role_user_assignments_demo2:
+  - role_definition: Organization Admin
+    user: demo2_org_admin_service_account # 6
+    object_ids: demo2 # 3
+controller_templates_demo2:
+  - name: aap_config_demo2
+    project: config_as_code_demo2
+    job_type: run
+    playbook: playbooks/aap_config.yml
+    inventory: config_as_code_demo2
+    execution_environment: Default execution environment
+    concurrent_jobs_enabled: false
+    ask_variables_on_launch: true
+    limit: "{{ env }}"
+    verbosity: 0
+    credentials:
+      - aap_demo2
+      - vault
+controller_projects_demo2:
+  - name: config_as_code_demo2
+    description: config as code project
+    organization: demo2
+    scm_type: git
+    scm_url: git@github.com:djdanielsson/casc_demo_2.git # will need a repo prior to put into code
+    scm_branch: "{{ scm_branch }}"
+    scm_clean: true
+    scm_update_on_launch: true
+    scm_credential: "github" # will need a cred prior to pull their repo
+    update_project: true
+    wait: true
+
+...
